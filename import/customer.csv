@@ -1,0 +1,2 @@
+login_username,customer_id,policy_id,customer_name,active_since,dob,age,mailing_address_line_1,mailing_address_line_2,mailing_county,mailing_city,mailing_state,mailing_country,mailing_zip_code
+marktaylor12,428-59-7371,1.23E+08,Mark Taylor,########,########,56,123,Main Street,Hillsborough,Tampa,Florida,USA,33503

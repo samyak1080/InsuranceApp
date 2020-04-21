@@ -1,0 +1,3 @@
+customer_id,policy_id,vehicle_year,make,model,body_style,vin,license_plate_no,license_registeration_state
+428-59-7371,1.23E+08,2017,BMW,Z4,Double Door,WBAHF3C59KWC17167,586-5GX,Florida
+428-59-7372,1.23E+08,2018,Audi,R8,Double Door,WBAHF3C59KWC17168,586-5GS,Florida

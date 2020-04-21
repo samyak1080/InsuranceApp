@@ -1,0 +1,2 @@
+policy_id,policy_holder_name,primary_ind,active_since,issue_date,policy_effective_date,policy_expiry_date,major_violation,license_status,at_fault_accident,minor_violation,registered_state,liabilty_bodily_injury,liabilty_prop_damage,comprehensive_ded_w_glass,collision_ded,emergency_road_service,car_rental_travel_exp,uninsured_mv_bi,under_insured_mv_pd,agent_id
+1.23E+08,Mark Taylor,Y,########,4/1/2020,4/2/2020,9/2/2020,No,Active,No,No,Florida,$300000/$300000,"$100,000",$500,$500,Yes,Yes,$300000/$300000,"$100,000",agt54321

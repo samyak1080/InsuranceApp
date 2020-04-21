@@ -1,0 +1,3 @@
+customer_id,policy_id,dl_no,driver_name,accident_type,accident_date,accident_location,is_case_filed,license_plate_no,accident_county,accident_city,accident_state,accident_city_zip_code
+428-59-7371,1.23E+08,ABCDE12345,Mark Taylor,Major,3/2/2018,W Palm Ave,Yes,586-5GX,Hillsborough,Tampa,Florida,33602
+428-59-7372,1.23E+08,STUVW12345,Michelle Taylor,Minor,########,E Palm Ave,Yes,586-5GS,Hillsborough,Tampa,Florida,33607

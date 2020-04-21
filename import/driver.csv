@@ -1,0 +1,3 @@
+policy_id,driver_id,dl_no,driver_name,address_line_1,address_line_2,county,city,state,country,zip_code,dl_issue_date,dl_expiry_date,age,dob
+1.23E+08,428-59-7371,ABCDE12345,Mark Taylor,123,Main Street,Hillsborough,Tampa,Florida,USA,33503,########,########,56,########
+1.23E+08,428-59-7372,STUVW12345,Michelle Taylor,123,Main Street,Hillsborough,Tampa,Florida,USA,33503,########,########,55,########

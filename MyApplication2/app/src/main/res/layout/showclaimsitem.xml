@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_marginTop="10dp"
+    android:layout_marginHorizontal="10dp"
+    android:padding="7dp"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="7dp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/claimid"
+                android:layout_toLeftOf="@id/show_estimation"
+                android:textSize="18sp"
+                android:textColor="#555555"
+                android:textAlignment="viewStart"
+                android:layout_alignParentLeft="true"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:id="@+id/show_estimation"
+                android:padding="2dp"
+                android:visibility="invisible"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/money_estimation_green_24dp"
+                />
+        </RelativeLayout>
+
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/claimproof"
+            android:maxHeight="200dp"
+            android:layout_gravity="center_horizontal"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Overview:"
+            android:layout_marginTop="10dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/overview"
+
+            android:textSize="15sp"
+            android:layout_marginTop="7dp"
+            />
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Status:"
+    android:layout_marginTop="10dp"
+
+    />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="3"
+    android:orientation="horizontal"
+    >
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:layout_weight="1"
+            >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            android:id="@+id/st_submitted_line"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            android:background="#aaaaaa"
+        >
+
+        </LinearLayout>
+            <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/st_submitted"
+                android:layout_alignParentRight="true"
+
+                android:src="@drawable/ic_dot_grey"
+            />
+
+        </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:layout_weight="1"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/st_approved_line"
+            android:layout_height="7dp"
+            android:background="#aaaaaa"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+
+            >
+
+        </LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_dot_grey"
+            android:id="@+id/st_approved"
+            />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginVertical="10dp"
+        android:layout_weight="1"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            android:background="#aaaaaa"
+            android:id="@+id/st_accepted_line"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            >
+
+        </LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:id="@+id/st_accepted"
+
+            android:src="@drawable/ic_dot_grey"
+            />
+
+    </RelativeLayout>
+</LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/progress"
+                android:layout_marginTop="7dp"
+                android:hint="APP"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:layout_marginBottom="10dp"
+                />
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:id="@+id/if_approved_options"
+            android:padding="10dp"
+            android:visibility="gone"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
+                android:layout_weight="1"
+                android:text="ACCEPT"
+                android:layout_marginRight="8dp"
+                android:id="@+id/accept"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/green_button_border"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
+
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                android:text="REJECT"
+                android:id="@+id/reject"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/red_button_border"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
+                android:layout_weight="1"
+                android:text="PAYMENT MODE"
+                android:id="@+id/payment_mode"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/hold_button_border"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

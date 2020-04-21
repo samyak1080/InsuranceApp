@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Damage_estimator">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/car_top_foreground"
+        android:minHeight="400dp"
+        android:layout_alignParentTop="true"
+        android:id="@+id/r1"
+        >
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/head_L_L"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="250dp"
+            android:button="@drawable/cb_selector"
+            />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/head_L_R"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="120dp"
+            android:button="@drawable/cb_selector"
+            />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tail_L_L"
+            android:button="@drawable/cb_selector"
+            android:layout_marginLeft="350dp"
+            android:layout_marginTop="250dp"
+            />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tail_L_R"
+            android:layout_marginLeft="350dp"
+            android:layout_marginTop="120dp"
+            android:button="@drawable/cb_selector"
+
+            />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/wind_shield"
+            android:layout_marginTop="185dp"
+            android:layout_marginLeft="120dp"
+            android:button="@drawable/cb_selector"
+            />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bumper"
+            android:layout_marginTop="185dp"
+            android:layout_marginLeft="2dp"
+            android:button="@drawable/cb_selector"
+            />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/roof_window"
+            android:layout_marginTop="185dp"
+            android:layout_marginLeft="220dp"
+            android:button="@drawable/cb_selector"
+            />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/car_hood"
+            android:layout_marginTop="185dp"
+            android:layout_marginLeft="47dp">
+            android:button="@drawable/cb_selector"
+        </CheckBox>
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/damaged_parts_info"
+        android:layout_below="@id/r1"
+        >
+
+
+    </android.support.v7.widget.RecyclerView>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/snack"
+        android:background="@drawable/laytotal_back"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:text="Cost Estimated :"
+            android:layout_alignParentLeft="true"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            />
+        <View
+            android:layout_width="1dp"
+            android:background="#ffffff"
+            android:layout_height="25dp"
+
+            android:layout_marginTop="2dp"
+            android:id="@+id/divider"
+            android:layout_marginBottom="2dp"
+
+            android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/estimatedcost"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            />
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

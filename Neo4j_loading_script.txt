@@ -1,5 +1,11 @@
+-------------------------------------------------------------Load Data-------------------------------------------------------------------
+CREATE (n:Agent {agent_id: "agt54321", login_agentname: "katherine12", agent_name: "Katherine John", agent_address1: "4381", agent_address2: "Stevens Ave", City: "Tampa", State: "Florida",   Zip_Code: "33601",  Country: "US" } )
+
+LOAD CSV WITH HEADERS FROM 'file:///Syslogin.csv' AS syslogins
+create (a:Syslogin {username: syslogins.username, password: syslogins.password, role_type: syslogins.role_type})
+
 LOAD CSV WITH HEADERS FROM 'file:///customer.csv' AS customers 
-create (a:Customer {customer_id: customers.customer_id, policy_id: customers.policy_id,customer_name: customers.customer_name, active_since: customers.active_since, dob: customers.dob, age: customers.age})
+create (a:Customer {login_username: customers.login_username, cutomer_id: customers.customer_id, policy_id: customers.policy_id,customer_name: customers.customer_name, active_since: customers.active_since, dob: customers.dob, age: customers.age, mailing_address_line_1: customers.mailing_address_line_1, mailing_address_line_2: customers.mailing_address_line_2, mailing_county: customers.mailing_county, mailing_city: customers.mailing_city, mailing_state: customers.mailing_state, mailing_country: customers.mailing_country, mailing_zip_code:customers.mailing_zip_code})
 
 LOAD CSV WITH HEADERS FROM 'file:///dependent.csv' AS dependents 
 create (a:Dependent {dependent_id: dependents.dependent_id, policy_id: dependents.policy_id, dependent_name: dependents.dependent_name, relation_to_primary: dependents.relation_to_primary, dob: dependents.dob, age: dependents.age})
@@ -8,10 +14,7 @@ LOAD CSV WITH HEADERS FROM 'file:///driver.csv' AS drivers
 create (c:Driver {driver_id: drivers.driver_id, policy_id: drivers.policy_id, driver_name: drivers.driver_name, dl_no: drivers.dl_no, address_line_1: drivers.address_line_1, address_line_2: drivers.address_line_2, county: drivers.county, city: drivers.city, state:drivers.state, country:drivers.country, zip_code:drivers.zip_code, dl_issue_date:drivers.dl_issue_date, dl_expiry_date:drivers.dl_expiry_date, age:drivers.age, dob:drivers.dob})
 
 LOAD CSV WITH HEADERS FROM 'file:///policy.csv' AS policies 
-create (c:Policy {policy_id: policies.policy_id, policy_holder_name: policies.policy_holder_name, primary_ind: policies.primary_ind, active_since: policies.active_since, start_date: policies.start_date, end_date: policies.end_date, major_violation: policies.major_violation, license_status: policies.license_status, at_fault_accident:policies.at_fault_accident, minor_violation:policies.minor_violation, registered_state:policies.registered_state})
-
-LOAD CSV WITH HEADERS FROM 'file:///address.csv' AS addresses 
-create (e:Address {policy_id: addresses.policy_id, customer_name: addresses.customer_name, mailing_address_line_1: addresses.mailing_address_line_1, mailing_address_line_2: addresses.mailing_address_line_2, mailing_county: addresses.mailing_county, mailing_city: addresses.mailing_city, mailing_state: addresses.mailing_state, mailing_country: addresses.mailing_country, mailing_zip_code:addresses.mailing_zip_code})
+create (c:Policy {policy_id: policies.policy_id, policy_holder_name: policies.policy_holder_name, primary_ind: policies.primary_ind, active_since: policies.active_since, issue_date:policies.issue_date, policy_effective_date:policies.policy_effective_date, policy_expiry_date:policies.policy_expiry_date, major_violation: policies.major_violation, license_status: policies.license_status, at_fault_accident:policies.at_fault_accident, minor_violation:policies.minor_violation, registered_state:policies.registered_state, liabilty_bodily_injury:policies.liabilty_bodily_injury, liabilty_prop_damage: policies.liabilty_prop_damage, drivercomprehensive_ded_w_glass_name: policies.comprehensive_ded_w_glass, collision_ded: policies.collision_ded, emergency_road_service: policies.emergency_road_service, car_rental_travel_exp: policies.car_rental_travel_exp, uninsured_mv_bi: policies.uninsured_mv_bi, under_insured_mv_pd: policies.under_insured_mv_pd, agent_id: policies.agent_id})
 
 LOAD CSV WITH HEADERS FROM 'file:///accident_history.csv' AS accidents 
 create (f:AccidentHistory {customer_id:accidents.customer_id, policy_id: accidents.policy_id, dl_no: accidents.dl_no, driver_name: accidents.driver_name, accident_type: accidents.accident_type, accident_date: accidents.accident_date, accident_location: accidents.accident_location, is_case_filed: accidents.is_case_filed, license_plate_no: accidents.license_plate_no, accident_county:accidents.accident_county, accident_city:accidents.accident_city, accident_state:accidents.accident_state, accident_city_zip_code:accidents.accident_city_zip_code})
@@ -19,11 +22,10 @@ create (f:AccidentHistory {customer_id:accidents.customer_id, policy_id: acciden
 LOAD CSV WITH HEADERS FROM 'file:///vehicle.csv' AS vehicles 
 create (g:Vehicle {customer_id:vehicles.customer_id, policy_id: vehicles.policy_id, vehicle_year: vehicles.vehicle_year, make: vehicles.make, model: vehicles.model, body_style: vehicles.body_style, vin: vehicles.vin, license_plate_no: vehicles.license_plate_no, license_registeration_state: vehicles.license_registeration_state})
 
-LOAD CSV WITH HEADERS FROM 'file:///coverage.csv' AS coverages 
-create (f:Coverage {liabilty_bodily_injury:coverages.liabilty_bodily_injury, policy_id: coverages.policy_id, liabilty_prop_damage: coverages.liabilty_prop_damage, drivercomprehensive_ded_w_glass_name: coverages.comprehensive_ded_w_glass, collision_ded: coverages.collision_ded, emergency_road_service: coverages.emergency_road_service, car_rental_travel_exp: coverages.car_rental_travel_exp, uninsured_mv_bi: coverages.uninsured_mv_bi, under_insured_mv_pd: coverages.under_insured_mv_pd, issue_date:coverages.issue_date, policy_effective_date:coverages.policy_effective_date, policy_expiry_date:coverages.policy_expiry_date})
+CREATE (j:Roadside_Assistance{name: "Joe's Auto Repair", address: '789, Main Street, Hillsborough, Tampa, Florida', contact_number: '777-231-8976'})
 
 
-----RELATIONS----
+-----------------------------------------------------------Create Relationship-----------------------------------------------
 LOAD CSV WITH HEADERS FROM 'file:///customer.csv' AS customers 
 MATCH (c:Customer{policy_id: customers.policy_id}),(b:Policy{policy_id: customers.policy_id})
 CREATE (b)-[a1:IS_ISSUED_FOR]->(c)
@@ -33,19 +35,11 @@ MATCH (c:Customer{policy_id: customers.policy_id}),(b:Dependent{policy_id: custo
 CREATE (b)-[a1:IS_DEPEDENDENT_UPON]->(c)
 
 LOAD CSV WITH HEADERS FROM 'file:///policy.csv' AS policies 
-MATCH (c:Coverage{policy_id: policies.policy_id}),(b:Policy{policy_id: policies.policy_id})
-CREATE (b)-[a1:HAS]->(c)
-
-LOAD CSV WITH HEADERS FROM 'file:///policy.csv' AS policies 
 MATCH (c:Vehicle{policy_id: policies.policy_id}),(b:Policy{policy_id: policies.policy_id})
 CREATE (b)-[a1:IS_ISSUED_FOR]->(c)
 
-LOAD CSV WITH HEADERS FROM 'file:///customer.csv' AS customers 
-MATCH (c:Address{policy_id: customers.policy_id}),(b:Customer{policy_id: customers.policy_id})
-CREATE (b)-[a1:LIVES_IN]->(c)
-
 LOAD CSV WITH HEADERS FROM 'file:///driver.csv' AS drivers 
-MATCH (c:Customer{customer_id: drivers.driver_id}),(b:Driver{driver_id: drivers.driver_id})
+MATCH (c:Customer{cutomer_id: drivers.driver_id}),(b:Driver{driver_id: drivers.driver_id})
 CREATE (c)-[a1:IS_ALSO]->(b)
 
 LOAD CSV WITH HEADERS FROM 'file:///driver.csv' AS drivers 
@@ -59,6 +53,7 @@ CREATE (b)-[a1:WAS_DRIVING]->(c)
 LOAD CSV WITH HEADERS FROM 'file:///driver.csv' AS drivers 
 MATCH (c:AccidentHistory{customer_id: drivers.driver_id}),(b:Driver{driver_id: drivers.driver_id})
 CREATE (b)-[a1:MET_ACCIDENT]->(c)
+
 
 -----------------------------------------------EVENTS------------------------------------------------------------------
 

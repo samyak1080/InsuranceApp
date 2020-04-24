@@ -105,6 +105,7 @@ public class Policy extends Fragment {
         primary_ind=rootView.findViewById(R.id.primary_ind);
         under_insured_mv_pd=rootView.findViewById(R.id.under_insured_mv_pd);
         uninsured_mv_bi=rootView.findViewById(R.id.uninsured_mv_bi);
+        MainActivity.actionBar.show();
         new PolicyDetails(MainActivity.policy_id).execute();
         return rootView;
     }

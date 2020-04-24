@@ -93,6 +93,7 @@ public class RoadsideAssistance extends Fragment {
         name_tab = rootView.findViewById(R.id.name);
         contact_number_tab = rootView.findViewById(R.id.contact_number);
         address_tab = rootView.findViewById(R.id.address);
+        MainActivity.actionBar.show();
         new RoadsideAssistanceDetails().execute();
         return rootView;
     }

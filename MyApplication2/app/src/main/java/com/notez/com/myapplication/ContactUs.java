@@ -74,7 +74,7 @@ public class ContactUs extends Fragment {
         address.setText("123, Main Street, Hillsborough, Tampa, Florida-33601");
         email.setText("customer_care@xyz.com");
         website.setText("xyz.com/customer_care");
-
+        MainActivity.actionBar.show();
 
         return rootView;
     }

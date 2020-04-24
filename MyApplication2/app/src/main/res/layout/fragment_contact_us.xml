@@ -12,40 +12,7 @@
         android:orientation="vertical"
         android:layout_height="match_parent">
 
-        <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/usrnm"
-                android:padding="7dp"
-                android:textAlignment="center"
-                android:layout_toLeftOf="@id/home_butn"
-                android:text="James Bond"
-                android:textSize="20sp"
 
-                />
-            <ImageView
-                android:id="@+id/home_butn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/menu_butn"
-                android:baselineAlignBottom="false"
-                android:padding="10dp"
-                android:src="@drawable/ic_home"
-                android:textAlignment="center" />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:id="@+id/menu_butn"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/menu_grey_24dp"
-                />
-        </RelativeLayout>>
 
 
         <android.support.v7.widget.CardView

@@ -5,6 +5,7 @@ import time
 import os
 import uuid
 import logging
+import json
 
 logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
 
@@ -134,6 +135,50 @@ class DigitalBrainModel:
 
         return auto_detection_data[0]['a.auto_detection_data']
 
+        
+
+    def get_amount_by_customer(self, policy_id, claimid):
+        amount_by_company = graph.run("MATCH (j:Policy) WHERE j.policy_id = {policy_id} RETURN j.drivercomprehensive_ded_w_glass_name", policy_id = policy_id).evaluate()
+
+        auto_detection_data = graph.run("MATCH (a:Claim) WHERE a.claimid = {claimid} RETURN a.auto_detection_data", claimid = claimid).data()
+
+        print(auto_detection_data[0]["a.auto_detection_data"])
+        temp = json.loads(auto_detection_data[0]["a.auto_detection_data"])
+        print("---------")
+        print(temp)
+        #estimate = auto_detection_data[0]['a.auto_detection_data']['total_cost']
+        print("---------???")
+        print(temp["image"])
+        temp=list(temp["image"])
+        print("---------//...")
+        print(temp)
+        print("---------///")
+        print(temp[0])
+        temp=dict(temp[0])
+        estimate = temp["total_cost"]
+        print("---------")
+        print(temp["total_cost"])
+        print(estimate)
+        print(type(estimate))
+
+
+        result = (int(estimate)) - (int(amount_by_company[1:].replace(",","")))
+        print(result)
+        amount_by_customer = 0
+        if(result >= 0):
+            amount_by_customer = result
+        else:
+            amount_by_customer = 0
+
+        print(amount_by_customer) 
+        amount_by_customer = '$' + str(amount_by_customer)
+        return jsonify([
+            {
+                "amount_to_be_paid": amount_by_customer,
+                "deductible": amount_by_company,
+            }
+        ])
+
     def get_city_events(self,city):
         res=graph.run("MATCH (a:Event) where a.rank >=80 RETURN a ORDER BY a.rank DESC")
         ret=[]
@@ -248,7 +293,7 @@ class DigitalBrainModel:
                 "uninsured_mv_bi":dict(dict(record)['j'])["uninsured_mv_bi"], 
             }
             for record in res
-        ])        
+        ])   
 
 
     def get_driver_details(self, policy_id):
@@ -275,6 +320,8 @@ class DigitalBrainModel:
             for record in res
         ])
 
+
+
     def get_roadside_assistance(self):
         res = graph.run("MATCH (j:Roadside_Assistance) RETURN j")
         res = list(res)
@@ -282,7 +329,8 @@ class DigitalBrainModel:
             {
                 "address":dict(dict(record)['j'])["address"],
                 "name":dict(dict(record)['j'])["name"],
-                "contact_number":dict(dict(record)['j'])["contact_number"],
+                "contact_number":dict(dict(record)['j'])["name"],
             }
             for record in res
         ])
+

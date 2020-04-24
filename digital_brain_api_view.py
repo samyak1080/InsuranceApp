@@ -96,8 +96,6 @@ def auto_detection():
     auto_detection_data=DigitalBrainModel("").get_auto_detection_data(claim_id);
     
     if auto_detection_data is None:
-        if 'location' in request.args:
-            logging.info('Get image location path and image file name ' + request.args['location'])
             location, tail = os.path.split(request.args['location'])
         else:
             logging.info('Failed to image location path and image file name')
@@ -128,7 +126,25 @@ def auto_detection():
             logging.info('Failed to process image in Auto Detection model')  
             return "Auto Detection Process Failed. Check for Logs"
     else:
-        return auto_detection_data
+#         return auto_detection_data
+
+
+# #Retrieve all claim requests to show on Mobile App
+# @app.route("/api/v1/resources/store_auto_detection_model",methods=['GET', 'POST'])
+# def store_auto_detection_model():
+#     logging.info("Return all claim requests")
+
+#     data=""
+
+#     with open('estimation.json') as json_file:
+#         data = json.load(json_file)
+#         DigitalBrainModel("").store_auto_detection_model('CL1586954783051', json.dumps(data))
+
+#     return data
+
+
+
+
 #Retrieve all claim requests to show on Mobile App
 @app.route("/api/v1/resources/retrieve_all_claims",methods=['GET', 'POST'])
 def retrieve_claim_request():
@@ -182,21 +198,28 @@ def nearby_events():
     #customer_id="428-59-7371"
     address=DigitalBrainModel("").get_customer_address(policy_id)
     logging.info("Test")
-    location = geolocator.geocode(address["mailing_address_line_1"]+","+address["mailing_address_line_2"]+","+address["mailing_state"]+","+address["mailing_country"])
+    location = geolocator.geocode(address["mailing_address_line_1"]+","+address["mailing_address_line_2"]+","+address["mailing_state"]+","+address["mailing_country"],timeout=30)
     print ("lat long customer: "+str(location.latitude)+"!!!!!!!!!!!!!!"+ str(location.longitude))
     ret=DigitalBrainModel("").get_city_events("")
     res=[]
     top = 2
+    #ensuring one weather event
     for r in ret:
         dist=distance_between_points(r["lat"], r["long"], location.latitude, location.longitude)
-        #print ("distance:     "+str(dist) +"  lat: "+ str(r["lat"])+"  long: "+ str(r["long"]))
+        if (dist<=3960 and r["category"] == "severe-weather" ):
+            r["distance"] = int(dist)
+            res+=[r] 
+            break
+    #any other event with highest rank
+    for r in ret:
+        dist=distance_between_points(r["lat"], r["long"], location.latitude, location.longitude)
         if (dist<=3960):
             r["distance"] = int(dist)
             res+=[r] 
-            top=top-1
-            if top == 0:
-                break
+            break
     return str(res)
+    
+    
 @app.route('/api/v1/resources/get_policy_id', methods=['GET', 'POST'])
 def get_policy_id():
     claim_id=request.form['claim_id']
@@ -224,7 +247,7 @@ def get_customer_address():
         address=DigitalBrainModel("").get_customer_address_from_claimid(claim_id)
     print(address)      
     return address
-
+        
 #Retrieve details of the driver involved in the claim
 @app.route("/api/v1/resources/get_driver_details",methods=['GET', 'POST'])
 def get_driver_details():
@@ -245,17 +268,17 @@ def get_policy_details():
 @app.route("/api/v1/resources/get_customer_details",methods=['GET', 'POST'])
 def get_customer_details():
     logging.info("Return customer details")
-    customer_id=request.form['customer_id']
+    policy_id=request.form['policy_id']
     #customer_id="428-59-7371"
-    return DigitalBrainModel("").get_customer_details(customer_id)
+    return DigitalBrainModel("").get_customer_details(policy_id)
 
 #Retrieve details about the dependents on the customer
 @app.route("/api/v1/resources/get_dependent_details",methods=['GET', 'POST'])
 def get_dependent_details():
     logging.info("Return customer's dependents details")
-    customer_id=request.form['customer_id']
+    policy_id=request.form['policy_id']
     #customer_id="428-59-7371"
-    return DigitalBrainModel("").get_dependent_details(customer_id)
+    return DigitalBrainModel("").get_dependent_details(policy_id)
 
 #Retrieve details about the workshop for roadside assistance
 @app.route("/api/v1/resources/get_roadside_assistance",methods=['GET', 'POST'])
@@ -264,7 +287,25 @@ def get_roadside_assistance():
     #customer_id=request.form['customer_id']
     #customer_id="428-59-7371"
     return DigitalBrainModel("").get_roadside_assistance()
-        
+
+#Retrieve amount to be paid by the customer
+@app.route("/api/v1/resources/get_amount_by_customer",methods=['GET', 'POST'])
+def get_amount_by_customer():
+    logging.info("Return customer's dependents details")
+    policy_id=request.form['policy_id']
+    #policy_id="1.23E+08"
+    claim_id=request.form['claim_id']
+    #claimid = "CL1586954783051"
+    return DigitalBrainModel("").get_amount_by_customer(policy_id, claimid)
+
+
+@app.route("/api/v1/resources/test",methods=['GET', 'POST'])
+def test():
+    logging.info("Return workshop details")
+    #customer_id=request.form['customer_id']
+    #customer_id="428-59-7371"
+    policy_id="1.23E+08"
+    return DigitalBrainModel("").test(policy_id)
 
 def haversine(angle_radians):
     return sin(angle_radians / 2.0) ** 2

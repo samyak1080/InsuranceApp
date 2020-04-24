@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +40,7 @@ public class ClaimEstimation extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     public static ImageView H_image;
     public static Context mContext;
-    public static TextView C_estimations,claim_id;
+    public static TextView C_estimations,claim_id, deductible, customer_amount;
 
     private String mParam1;
     private String mParam2;
@@ -83,6 +84,9 @@ public class ClaimEstimation extends Fragment {
         C_estimations=rootView.findViewById(R.id.c_estimations);
         H_image=rootView.findViewById(R.id.h_image);
         claim_id=rootView.findViewById(R.id.claimid);
+        deductible = rootView.findViewById(R.id.deductible_amount);
+        customer_amount = rootView.findViewById(R.id.amount_customer);
+
         mContext=getContext();
         return rootView;
     }
@@ -226,7 +230,9 @@ public class ClaimEstimation extends Fragment {
             Log.e("path 2:      ",path);
             path=path.replaceAll("\\\\","/");
             Log.e("path 3:      ",path);
-            new Fetch_Highlights(path).execute();}
+            new ClaimAmountDetails(MainActivity.policy_id, current.getClaimid()).execute();
+            new Fetch_Highlights(path).execute();
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -234,6 +240,88 @@ public class ClaimEstimation extends Fragment {
             super.onPostExecute(s);
         }
     }
+
+
+
+
+    public static class  ClaimAmountDetails extends AsyncTask<Void,Void, JSONArray> {
+        String policy_id;
+        String claim_id;
+
+        public ClaimAmountDetails(String policy_id, String claim_id){
+            this.policy_id = policy_id;
+            this.claim_id = claim_id;
+        }
+
+
+        @Override
+        protected JSONArray doInBackground(Void... voids) {
+
+            try {
+                OkHttpClient client = new OkHttpClient();
+                RequestBody requestBody = new MultipartBody.Builder()
+                        .setType(MultipartBody.FORM)
+                        .addFormDataPart("policy_id", policy_id)
+                        .addFormDataPart("claim_id", claim_id)
+                        .build();
+
+
+                Request request = new Request.Builder()
+                        .url(mContext.getResources().getString(R.string.api_server)+"get_amount_by_customer")
+                        .post(requestBody)
+                        .build();
+
+                Log.e("Request:","Get_Amount_By_Customer");
+
+                Response response = client.newCall(request).execute();
+                InputStream inputStream = response.body().byteStream();
+                InputStreamReader isReader = new InputStreamReader(inputStream);
+                BufferedReader reader = new BufferedReader(isReader);
+                StringBuffer sb = new StringBuffer();
+                String str;
+                while((str = reader.readLine())!= null){
+                    sb.append(str);
+                }
+                Log.e("Response",sb.toString());
+
+                JSONArray myresponse= new JSONArray(sb.toString());
+
+                Log.e("Request",response.message());
+                return myresponse;
+
+
+
+            } catch (IOException e) {
+                Log.e("IO",e.getMessage());
+            } catch (JSONException e) {
+                Log.e("JSON_CL_AMT_DET",e.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray claim_amount_details) {
+            try {
+                if (claim_amount_details!=null)
+                    {
+                    JSONObject jsonobject = null;
+                    jsonobject = claim_amount_details.getJSONObject(0);
+                    deductible.setText(jsonobject.getString("deductible"));
+                    customer_amount.setText(jsonobject.getString("amount_to_be_paid"));
+                }
+            }catch (JSONException e) {
+                Log.e("Exception_JSON",e.getMessage());
+            }
+            catch (Exception e){
+                Log.e("Exception",e.getMessage());
+            }
+
+            super.onPostExecute(claim_amount_details);
+        }
+    }
+
+
+
 
     public static class  Fetch_Highlights extends AsyncTask<Void,Void, Bitmap>{
         String path;
@@ -286,8 +374,5 @@ public class ClaimEstimation extends Fragment {
             super.onPostExecute(s);
         }
     }
-
-
-
 }
 
